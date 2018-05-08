@@ -457,6 +457,7 @@ void MainWindow::scaleFigure3D(float &scaleX, float &scaleY, float scaleZ)
       }
 
 }
+
 void MainWindow::on_scale3DButton_clicked()
 {
     float scaleX=QInputDialog::getDouble(this,QString("scale x"),

@@ -24,6 +24,10 @@
        <number>1</number>
       </property>
       <widget class="QWidget" name="tab">
+       <attribute name="icon">
+        <iconset resource="rec.qrc">
+         <normaloff>:/rec/rec/icons8-unchecked-checkbox-96.png</normaloff>:/rec/rec/icons8-unchecked-checkbox-96.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>2D</string>
        </attribute>
@@ -180,6 +184,10 @@
          <property name="text">
           <string>scale</string>
          </property>
+         <property name="icon">
+          <iconset resource="rec.qrc">
+           <normaloff>:/rec/rec/icons8-resize-filled-100.png</normaloff>:/rec/rec/icons8-resize-filled-100.png</iconset>
+         </property>
          <property name="iconSize">
           <size>
            <width>50</width>
@@ -292,7 +300,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>Quick Design2</string>
+          <string>Quick Design 2</string>
          </property>
          <property name="icon">
           <iconset resource="rec.qrc">
@@ -311,6 +319,10 @@
        </widget>
       </widget>
       <widget class="QWidget" name="tab_2">
+       <attribute name="icon">
+        <iconset resource="rec.qrc">
+         <normaloff>:/rec/rec/icons8-cube-filled-100.png</normaloff>:/rec/rec/icons8-cube-filled-100.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>3D</string>
        </attribute>
@@ -445,6 +457,10 @@
          <property name="text">
           <string>scale</string>
          </property>
+         <property name="icon">
+          <iconset resource="rec.qrc">
+           <normaloff>:/rec/rec/icons8-resize-filled-100.png</normaloff>:/rec/rec/icons8-resize-filled-100.png</iconset>
+         </property>
          <property name="iconSize">
           <size>
            <width>50</width>
@@ -557,7 +573,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>Quick Design2</string>
+          <string>Quick Design 2</string>
          </property>
          <property name="icon">
           <iconset resource="rec.qrc">

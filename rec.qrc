@@ -5,5 +5,8 @@
         <file>rec/icons8-manual-104.png</file>
         <file>rec/icons8-move-96.png</file>
         <file>rec/icons8-quick-mode-on-100.png</file>
+        <file>rec/icons8-cube-filled-100.png</file>
+        <file>rec/icons8-resize-filled-100.png</file>
+        <file>rec/icons8-unchecked-checkbox-96.png</file>
     </qresource>
 </RCC>
