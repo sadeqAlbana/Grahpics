@@ -46,6 +46,7 @@ private slots:
     void on_scaleButton_clicked();
 
     void scaleFigure(int &scaleX, int &scaleY);
+    void scaleFigure3D(float &scaleX, float &scaleY, float scaleZ);
 
     void on_shearButton_clicked();
 
@@ -66,6 +67,8 @@ private slots:
     void on_QuickDesign3DButton_clicked();
 
     void on_QuickDesign3D2Button_clicked();
+
+    void on_scale3DButton_clicked();
 
 private:
     Ui::MainWindow *ui;

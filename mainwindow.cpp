@@ -446,3 +446,27 @@ void MainWindow::Rotate3D(float angle)
     qDebug()<<"After 2D"<<pl;
     DrawFig3D();
 }
+
+void MainWindow::scaleFigure3D(float &scaleX, float &scaleY, float scaleZ)
+{
+    for (auto &p : pl3D)
+      {
+          p.setX(p.x()*scaleX);
+          p.setY(p.y()*scaleY);
+          p.setZ(p.z()*scaleZ);
+      }
+
+}
+void MainWindow::on_scale3DButton_clicked()
+{
+    float scaleX=QInputDialog::getDouble(this,QString("scale x"),
+                                QString("scale x"),0,-10000,10000,1);
+    float scaleY=QInputDialog::getDouble(this,QString("scale y"),
+                                QString("scale y"),0,-10000,10000,1);
+    float scaleZ=QInputDialog::getDouble(this,QString("scale Z"),
+                                QString("scale Z"),0,-10000,10000,1);
+
+    scaleFigure3D(scaleX, scaleY, scaleZ);
+    DrawFig3D();
+
+}
