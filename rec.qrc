@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/rec">
+        <file>rec/icons8-rotate-filled-100.png</file>
+        <file>rec/icons8-clear-symbol-96.png</file>
+        <file>rec/icons8-manual-104.png</file>
+        <file>rec/icons8-move-96.png</file>
+        <file>rec/icons8-quick-mode-on-100.png</file>
+    </qresource>
+</RCC>
