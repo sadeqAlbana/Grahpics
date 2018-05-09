@@ -80,6 +80,10 @@ private slots:
 
     void on_mirror3DButton_clicked();
 
+    void on_DrawCirclerButton_clicked();
+
+    void DrawCircle(float r);
+
 private:
     Ui::MainWindow *ui;
 };

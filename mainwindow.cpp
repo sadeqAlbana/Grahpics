@@ -44,8 +44,19 @@ void MainWindow::DrawAxis2D()
 {
     int w=ui->graphicsView->width();
     int h=ui->graphicsView->height();
-    scene2D->addLine(w/2,0,w/2,h,QPen(Qt::blue)); //draw vertical axis
-    scene2D->addLine(0,h/2,w,h/2,QPen(Qt::red)); //draw horizontal axis
+
+    QRectF rect=scene2D->sceneRect();
+    rect.setCoords(-w/2,-h/2,w/2,h/2);
+    scene2D->setSceneRect(rect);
+
+
+    scene2D->addLine(-w/2,0,w/2,0,QPen(Qt::red)); //draw horizontal axis
+    scene2D->addLine(0,-h/2,0,h/2,QPen(Qt::blue)); //draw vertical axis
+
+
+
+
+
 }
 
 
@@ -110,7 +121,7 @@ void MainWindow::DrawFig2D()
     {
         scene2D->addLine(QLine(pl.at(i),(pl.at(i+1))));
     }*/
-    float w=ui->graphicsView->width()/2;
+    /*float w=ui->graphicsView->width()/2;
     float h=ui->graphicsView->height()/2;
 
     for(int i=0 ; i<pl.count()-1 ; i++)
@@ -120,8 +131,14 @@ void MainWindow::DrawFig2D()
         float x2=pl.at(i+1).x()+w;
         float y2=-(pl.at(i+1).y())+h;
         scene2D->addLine(x1, y1, x2, y2);
-    }
+    }*/
 
+    for(int i=0 ; i<pl.count()-1 ; i++)
+    {
+        QPointF p1=pl.at(i);
+        QPointF p2=pl.at(i+1);
+        scene2D->addLine(p1.x(),-p1.y(),p2.x(),-p2.y());
+    }
 
 }
 
@@ -612,5 +629,34 @@ void MainWindow::mirrorFig3D(int type)
               p.setY(-p.y());
               p.setZ(-p.z());
           }
+    }
+}
+
+void MainWindow::on_DrawCirclerButton_clicked()
+{
+    float radius=QInputDialog::getDouble(this,QString("radius"),
+                                QString("enter radius"),1,1,10000,1);
+    DrawCircle(radius);
+}
+
+void MainWindow::DrawCircle(float r)
+{
+    float x=-r;
+    float y1;
+    //float y2;
+    float dt=1/r;
+    while (x<=r)
+    {
+        y1=sqrt((pow(r,2)-pow(x,2)));
+
+        scene2D->addLine(x,y1,x,y1);
+        scene2D->addLine(x,-y1,x,-y1);
+        //qDebug()<<"x"<<x;
+        //qDebug()<<y1;
+        //qDebug()<<y2;
+        //scene2D->addEllipse(x,y1,2,2);
+        //scene2D->addEllipse(x,y2,2,2);
+        //scene2D->addLine(1,1,1,1);
+        x+=dt;
     }
 }
