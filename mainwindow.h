@@ -26,7 +26,7 @@ public:
     void DrawFig2D();
     void DrawFig3D();
     void Rotate2D(float angle);
-    void Rotate3D(float angle);
+    void Rotate3D(float angle, int type);
     void resizeEvent(QResizeEvent * event);
 
     void mapFig(int wx1, int wy1, int wx2, int wy2,int vx1, int vy1, int vx2, int vy2);
@@ -47,6 +47,7 @@ private slots:
 
     void scaleFigure(int &scaleX, int &scaleY);
     void scaleFigure3D(float &scaleX, float &scaleY, float scaleZ);
+    void mirrorFig3D(int type);
 
     void on_shearButton_clicked();
 
@@ -57,6 +58,7 @@ private slots:
     void on_mappingrButton_clicked();
 
     void moveFig(int offsetX, int offsetY);
+    void moveFig3D(float offsetX, float offsetY, float offsetZ);
 
     void on_reflectButton_clicked();
 
@@ -69,6 +71,14 @@ private slots:
     void on_QuickDesign3D2Button_clicked();
 
     void on_scale3DButton_clicked();
+
+    void on_clear3DButton_clicked();
+
+    void on_MoveFigure3DButton_clicked();
+
+    void on_Rotate3DButton_clicked();
+
+    void on_mirror3DButton_clicked();
 
 private:
     Ui::MainWindow *ui;

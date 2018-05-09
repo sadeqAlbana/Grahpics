@@ -430,21 +430,40 @@ void MainWindow::on_QuickDesign3D2Button_clicked()
     DrawFig3D();
 }
 
-void MainWindow::Rotate3D(float angle)
+void MainWindow::Rotate3D(float angle, int type)
 {
-
+    float T; //temp value
     float Th = angle*M_PI/180;
-    qDebug()<<"Th="<<Th;
-    for (auto &p : pl3D)
+    if (type==1)
     {
-        float T=p.x();
-        p.setX(p.x()*cos(Th) - p.y()*sin(Th));
-        p.setY(p.y()*cos(Th) + T*sin(Th));
-        //p.setZ(p.z()*cos(Th) + T*sin(Th));
-
+        for (auto &p : pl3D)
+        {
+            T=p.x();
+            p.setX(p.x()*cos(Th) - p.y()*sin(Th));
+            p.setY(p.y()*cos(Th) + T*sin(Th));
+            //p.z() stays the same
+        }
     }
-    qDebug()<<"After 2D"<<pl;
-    DrawFig3D();
+    else if (type==2)
+    {
+        for (auto &p : pl3D)
+        {
+            T=p.x();
+            p.setX(p.x()*cos(Th) - p.z()*sin(Th));
+            //p.y() stays the same
+            p.setZ(p.z()*cos(Th) + T*sin(Th));
+        }
+    }
+    else if (type==3)
+    {
+        for (auto &p : pl3D)
+        {
+            T=p.y();
+            //p.x() stays the same
+            p.setY(p.y()*cos(Th) - p.z()*sin(Th));
+            p.setZ(p.z()*cos(Th) + T*sin(Th));
+        }
+    }
 }
 
 void MainWindow::scaleFigure3D(float &scaleX, float &scaleY, float scaleZ)
@@ -470,4 +489,128 @@ void MainWindow::on_scale3DButton_clicked()
     scaleFigure3D(scaleX, scaleY, scaleZ);
     DrawFig3D();
 
+}
+
+void MainWindow::on_clear3DButton_clicked()
+{
+    scene3D->clear();
+    pl3D.clear();
+    DrawAxis3D();
+}
+
+void MainWindow::moveFig3D(float offsetX, float offsetY, float offsetZ)
+{
+    for (auto &p : pl3D)
+    {
+        p.setX(p.x()+offsetX);
+        p.setY(p.y()+offsetY);
+        p.setZ(p.z()+offsetZ);
+    }
+}
+
+void MainWindow::on_MoveFigure3DButton_clicked()
+{
+    float offsetX=QInputDialog::getDouble(this,QString("enter new x cordinate"),
+                                QString("enter new x cordinate"),0,-10000,10000,1);
+    float offsetY=QInputDialog::getDouble(this,QString("enter new y cordinate"),
+                                QString("enter new y cordinate"),0,-10000,10000,1);
+    float offsetZ=QInputDialog::getDouble(this,QString("enter new Z cordinate"),
+                                QString("enter new Z cordinate"),0,-10000,10000,1);
+
+
+
+     moveFig3D(offsetX,offsetY,offsetZ);
+     DrawFig3D();
+}
+
+void MainWindow::on_Rotate3DButton_clicked()
+{
+    float angle=QInputDialog::getDouble(this,QString("enter angle"),
+                                QString("enter angle"),0,-360,360,1);
+    int type=QInputDialog::getInt(this,QString("rotation Type"),
+                                QString("[1]->Rotation About z-Axis     [2]->Rotation About y-Axis   [3]->Rotation About x-Axis     [4]->Rotation About an Arbitrary Axis"),0,-360,360,1);
+
+    Rotate3D(angle,type);
+    scene3D->clear();
+    DrawAxis3D();
+    DrawFig3D();
+}
+
+void MainWindow::on_mirror3DButton_clicked()
+{
+    int type=QInputDialog::getInt(this,QString("enter Type"),
+                                QString("[1]->In X-axis     [2]->In Y-axis     [3]->In Z-axis              [4]->In Plane XY     [5]->In Plane YZ     [6]->In Plane XZ     [7]->In Orginal Point"),1,1,7,1);
+    mirrorFig3D(type);
+    scene3D->clear();
+    DrawAxis3D();
+    DrawFig3D();
+}
+
+void MainWindow::mirrorFig3D(int type)
+{
+    if(type==1)
+    {
+        for (auto &p : pl3D)
+          {
+              //p.setX(p.x());
+              p.setY(-p.y());
+              p.setZ(-p.z());
+          }
+    }
+
+    if(type==2)
+    {
+        for (auto &p : pl3D)
+          {
+              p.setX(-p.x());
+              //p.setY(p.y());
+              p.setZ(-p.z());
+          }
+    }
+
+    if(type==3)
+    {
+        for (auto &p : pl3D)
+          {
+              p.setX(-p.x());
+              p.setY(-p.y());
+              //p.setZ(p.z());
+          }
+    }
+    if(type==4)
+    {
+        for (auto &p : pl3D)
+          {
+              //p.setX(p.x());
+              //p.setY(p.y());
+              p.setZ(-p.z());
+          }
+    }
+    if(type==5)
+    {
+        for (auto &p : pl3D)
+          {
+              p.setX(-p.x());
+              //p.setY(p.y());
+              //p.setZ(p.z());
+          }
+    }
+    if(type==6)
+    {
+        for (auto &p : pl3D)
+          {
+              //p.setX(p.x());
+              p.setY(-p.y());
+              //p.setZ(p.z());
+          }
+    }
+    if(type==7)
+    {
+        for (auto &p : pl3D)
+          {
+              p.setX(-p.x());
+              p.setY(-p.y());
+              p.setZ(-p.z());
+          }
+    }
 }

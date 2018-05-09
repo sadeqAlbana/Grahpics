@@ -519,7 +519,7 @@
           <enum>Qt::ToolButtonTextUnderIcon</enum>
          </property>
         </widget>
-        <widget class="QToolButton" name="reflect3DButton">
+        <widget class="QToolButton" name="mirror3DButton">
          <property name="geometry">
           <rect>
            <x>120</x>
@@ -529,7 +529,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>reflect</string>
+          <string>mirror</string>
          </property>
          <property name="iconSize">
           <size>
