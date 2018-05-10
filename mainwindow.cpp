@@ -21,6 +21,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsView->setScene(scene2D);
     ui->graphicsView3D->setScene(scene3D);
 
+    View2DLE=new QLineEdit(ui->graphicsView);
+    View2DLE->setReadOnly(true);
+    View2DLE->setStyleSheet("border : none");
+    View2DLE->setGeometry(ui->graphicsView->width()-66,ui->graphicsView->height()-21,65,20);
+
+    View3DLE=new QLineEdit(ui->graphicsView3D);
+    View3DLE->setReadOnly(true);
+    View3DLE->setStyleSheet("border : none");
+    View3DLE->setGeometry(ui->graphicsView3D->width()-66,ui->graphicsView3D->height()-21,65,20);
     //int w=ui->graphicsView->width();
     //int h=ui->graphicsView->height();
 
@@ -31,8 +40,20 @@ MainWindow::MainWindow(QWidget *parent) :
     DrawAxis3D();
 
     //ui->graphicsView->centerOn(ui->graphicsView->width()/2,ui->graphicsView->height()/2);
+    connect(scene2D,SIGNAL(geometryChanged(QPointF&)),this,SLOT(view2DGeometryChanged(QPointF &)));
+    connect(scene3D,SIGNAL(geometryChanged(QPointF&)),this,SLOT(view3DGeometryChanged(QPointF &)));
 
+}
 
+void MainWindow::view2DGeometryChanged(QPointF &p)
+{
+    View2DLE->setText(QString::number(p.rx())+","+QString::number(p.ry()));
+
+}
+
+void MainWindow::view3DGeometryChanged(QPointF &p)
+{
+    View3DLE->setText(QString::number(p.rx())+","+QString::number(p.ry()));
 }
 
 MainWindow::~MainWindow()

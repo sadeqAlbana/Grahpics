@@ -6,6 +6,7 @@
 #include <QResizeEvent>
 #include <customgraphicsscene.h>
 #include <QVector3D>
+#include <QLineEdit>
 namespace Ui {
 class MainWindow;
 }
@@ -30,6 +31,8 @@ public:
     void resizeEvent(QResizeEvent * event);
 
     void mapFig(int wx1, int wy1, int wx2, int wy2,int vx1, int vy1, int vx2, int vy2);
+    QLineEdit *View2DLE;
+    QLineEdit *View3DLE;
 
 private slots:
     void on_EnterValuesButton_clicked();
@@ -84,6 +87,9 @@ private slots:
 
     void DrawCircle(float r);
 
+public slots:
+    void view2DGeometryChanged(QPointF &p);
+    void view3DGeometryChanged(QPointF &p);
 private:
     Ui::MainWindow *ui;
 };
