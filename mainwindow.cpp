@@ -30,16 +30,11 @@ MainWindow::MainWindow(QWidget *parent) :
     View3DLE->setReadOnly(true);
     View3DLE->setStyleSheet("border : none");
     View3DLE->setGeometry(ui->graphicsView3D->width()-66,ui->graphicsView3D->height()-21,65,20);
-    //int w=ui->graphicsView->width();
-    //int h=ui->graphicsView->height();
 
-    //scene2D->setscene2DRect(-w/2,h/2,w,-h);
-    //scene2D->setscene2DRect(-w/2,h/2,w,-h);
 
     DrawAxis2D();
     DrawAxis3D();
 
-    //ui->graphicsView->centerOn(ui->graphicsView->width()/2,ui->graphicsView->height()/2);
     connect(scene2D,SIGNAL(geometryChanged(QPointF&)),this,SLOT(view2DGeometryChanged(QPointF &)));
     connect(scene3D,SIGNAL(geometryChanged(QPointF&)),this,SLOT(view3DGeometryChanged(QPointF &)));
 
@@ -70,14 +65,8 @@ void MainWindow::DrawAxis2D()
     rect.setCoords(-w/2,-h/2,w/2,h/2);
     scene2D->setSceneRect(rect);
 
-
-    scene2D->addLine(-w/2,0,w/2,0,QPen(Qt::red)); //draw horizontal axis
-    scene2D->addLine(0,-h/2,0,h/2,QPen(Qt::blue)); //draw vertical axis
-
-
-
-
-
+    scene2D->addLine(-w/2,0,w/2,0,QPen(QBrush(Qt::red),2)); //draw horizontal axis
+    scene2D->addLine(0,-h/2,0,h/2,QPen(QBrush(Qt::blue),2)); //draw vertical axis
 }
 
 
@@ -138,27 +127,12 @@ void MainWindow::on_QuickDesignButton_clicked()
 
 void MainWindow::DrawFig2D()
 {
-    /*for(int i=0 ; i<=pl.count()-2 ; i++)
-    {
-        scene2D->addLine(QLine(pl.at(i),(pl.at(i+1))));
-    }*/
-    /*float w=ui->graphicsView->width()/2;
-    float h=ui->graphicsView->height()/2;
-
-    for(int i=0 ; i<pl.count()-1 ; i++)
-    {
-        float x1=pl.at(i).x()+w;
-        float y1=-(pl.at(i).y())+h;
-        float x2=pl.at(i+1).x()+w;
-        float y2=-(pl.at(i+1).y())+h;
-        scene2D->addLine(x1, y1, x2, y2);
-    }*/
 
     for(int i=0 ; i<pl.count()-1 ; i++)
     {
         QPointF p1=pl.at(i);
         QPointF p2=pl.at(i+1);
-        scene2D->addLine(p1.x(),-p1.y(),p2.x(),-p2.y());
+        scene2D->addLine(p1.x(),-p1.y(),p2.x(),-p2.y(),QPen(QBrush(Qt::black),2));
     }
 
 }
@@ -222,7 +196,6 @@ void MainWindow::scaleFigure(int &scaleX, int &scaleY)
         p.setY(p.y()*scaleY);
     }
 
-     //DrawFig();
 }
 
 void MainWindow::on_shearButton_clicked()
@@ -424,8 +397,6 @@ void MainWindow::on_QuickDesign3DButton_clicked()
 
 void MainWindow::DrawAxis3D()
 {
-    //scene3D->setSceneRect(ui->graphicsView3D->rect());
-    //ui->graphicsView3D->fitInView(ui->graphicsView3D->scene()->sceneRect(),Qt::KeepAspectRatio);
 
     int w=ui->graphicsView3D->width();
     int h=ui->graphicsView3D->height();
@@ -433,9 +404,9 @@ void MainWindow::DrawAxis3D()
     QRectF rect=scene3D->sceneRect();
     rect.setCoords(-w/2,-h/2,w/2,h/2);
     scene3D->setSceneRect(rect);
-    scene3D->addLine(0,-h/2,0,0,QPen(Qt::blue));
-    scene3D->addLine(0,0,w/2,0,QPen(Qt::red));
-    scene3D->addLine(0,0,-w/2,h/2,QPen(Qt::green)); //z-axis
+    scene3D->addLine(0,-h/2,0,0,QPen(QBrush(Qt::blue),2));
+    scene3D->addLine(0,0,w/2,0,QPen(QBrush(Qt::red),2));
+    scene3D->addLine(0,0,-w/2,h/2,QPen(QBrush(Qt::green),2)); //z-axis
 
 
 
@@ -444,10 +415,7 @@ void MainWindow::DrawAxis3D()
 
 void MainWindow::DrawFig3D()
 {
-    /*for(int i=0 ; i<=pl.count()-2 ; i++)
-    {
-        scene2D->addLine(QLine(pl.at(i),(pl.at(i+1))));
-    }*/
+
 
     qDebug()<<"called";
     for(int i=0 ; i<pl3D.count()-1 ; i++)
@@ -455,7 +423,7 @@ void MainWindow::DrawFig3D()
         QVector3D v1=pl3D.at(i);
         QVector3D v2=pl3D.at(i+1);
         //scene3D->addLine(v1.x()-v1.z()*0.7, v1.y()-v1.z()*0.7, v2.x()-v2.z()*0.7, v2.y()-v2.z()*0.7);
-        scene3D->addLine((v1.x()-v1.z()*0.7), -(v1.y()-v1.z()*0.7), (v2.x()-v2.z()*0.7), -(v2.y()-v2.z()*0.7));
+        scene3D->addLine((v1.x()-v1.z()*0.7), -(v1.y()-v1.z()*0.7), (v2.x()-v2.z()*0.7), -(v2.y()-v2.z()*0.7),QPen(QBrush(Qt::black),2));
     }
 
 }
@@ -558,6 +526,8 @@ void MainWindow::on_MoveFigure3DButton_clicked()
 
 
      moveFig3D(offsetX,offsetY,offsetZ);
+     scene3D->clear();
+     DrawAxis3D();
      DrawFig3D();
 }
 
@@ -670,14 +640,10 @@ void MainWindow::DrawCircle(float r)
     {
         y1=sqrt((pow(r,2)-pow(x,2)));
 
-        scene2D->addLine(x,y1,x,y1);
-        scene2D->addLine(x,-y1,x,-y1);
-        //qDebug()<<"x"<<x;
-        //qDebug()<<y1;
-        //qDebug()<<y2;
+        scene2D->addLine(x,y1,x,y1,QPen(QBrush(Qt::black),2));
+        scene2D->addLine(x,-y1,x,-y1,QPen(QBrush(Qt::black),2));
         //scene2D->addEllipse(x,y1,2,2);
         //scene2D->addEllipse(x,y2,2,2);
-        //scene2D->addLine(1,1,1,1);
         x+=dt;
     }
 }
