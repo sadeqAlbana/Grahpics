@@ -15,6 +15,12 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+    enum AXIS{
+        XAxis   = 1,
+        YAxis   = 2,
+        ZAxis   = 3
+    };
+
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -28,9 +34,19 @@ public:
     void DrawFig3D();
     void Rotate2D(float angle);
     void Rotate3D(float angle, int type);
+    void DrawCircle(float r);
+    void reflectFig(int type);
+    void scaleFigure(int &scaleX, int &scaleY);
+    void scaleFigure3D(float &scaleX, float &scaleY, float scaleZ);
+    void mirrorFig3D(int type);
+    void moveFig(int offsetX, int offsetY);
+    void moveFig3D(float offsetX, float offsetY, float offsetZ);
     void resizeEvent(QResizeEvent * event);
-
     void mapFig(int wx1, int wy1, int wx2, int wy2,int vx1, int vy1, int vx2, int vy2);
+    void ProjectionParrarel3D(int  Axis);
+    void ProjectionPercpective3D(int Axis, int x1, int y1, int z1);
+
+
     QLineEdit *View2DLE;
     QLineEdit *View3DLE;
 
@@ -48,9 +64,8 @@ private slots:
 
     void on_scaleButton_clicked();
 
-    void scaleFigure(int &scaleX, int &scaleY);
-    void scaleFigure3D(float &scaleX, float &scaleY, float scaleZ);
-    void mirrorFig3D(int type);
+
+
 
     void on_shearButton_clicked();
 
@@ -60,12 +75,11 @@ private slots:
 
     void on_mappingrButton_clicked();
 
-    void moveFig(int offsetX, int offsetY);
-    void moveFig3D(float offsetX, float offsetY, float offsetZ);
+
 
     void on_reflectButton_clicked();
 
-    void reflectFig(int type);
+
 
     void on_QuickDesign2Button_clicked();
 
@@ -85,7 +99,10 @@ private slots:
 
     void on_DrawCirclerButton_clicked();
 
-    void DrawCircle(float r);
+
+    void on_ProjectionParrarel3DButton_clicked();
+
+    void on_ProjectionPercpective3DButton_clicked();
 
 public slots:
     void view2DGeometryChanged(QPointF &p);

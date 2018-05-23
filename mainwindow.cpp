@@ -145,8 +145,9 @@ void MainWindow::Rotate2D(float angle)
     for (auto &p : pl)
     {
         float T=p.x();
-        p.setX(p.x()*cos(Th) - p.y()*sin(Th));
-        p.setY(p.y()*cos(Th) + T*sin(Th));
+        p.setX(p.x()*cos(Th) + p.y()*sin(Th)); //x=x*cos(Th) + y*sin(Th)
+        p.setY(p.y()*cos(Th) - T*sin(Th));     //y=y*cos(Th) - x*sin(Th)
+                                               //invert +- to rotate counter clockwise
 
     }
     qDebug()<<"After 2D"<<pl;
@@ -415,8 +416,6 @@ void MainWindow::DrawAxis3D()
 
 void MainWindow::DrawFig3D()
 {
-
-
     qDebug()<<"called";
     for(int i=0 ; i<pl3D.count()-1 ; i++)
     {
@@ -646,4 +645,65 @@ void MainWindow::DrawCircle(float r)
         //scene2D->addEllipse(x,y2,2,2);
         x+=dt;
     }
+}
+
+void MainWindow::on_ProjectionParrarel3DButton_clicked()
+{
+    int Axis=QInputDialog::getInt(this,QString("enter type"),
+                                QString("[1]->About X-axis     [2]->About Y-axis     [3]->About Z-axis"),1,1,3,1);
+    ProjectionParrarel3D(Axis);
+    scene3D->clear();
+    DrawAxis3D();
+    DrawFig3D();
+}
+
+void MainWindow::ProjectionParrarel3D(int Axis)
+{
+    for (auto &p : pl3D)
+      {
+             if(Axis==XAxis)
+                p.setX(0);
+        else if(Axis==YAxis)
+                p.setY(0);
+        else if(Axis==ZAxis)
+                p.setZ(0);
+      }
+}
+
+void MainWindow::ProjectionPercpective3D(int Axis, int x1, int y1, int z1)
+{
+    float u;
+
+    for (auto &p : pl3D)
+      {
+             if(Axis==XAxis)
+                 u=-x1/(p.x()-x1);
+        else if(Axis==YAxis)
+                u=-y1/(p.y()-y1);
+        else if(Axis==ZAxis)
+                u=-z1/(p.z()-z1);
+
+             p.setX(x1 + (p.x()- x1) *u);
+             p.setY(y1 + (p.y()- y1) *u);
+             p.setZ(z1 + (p.z()- z1) *u);
+      }
+}
+
+void MainWindow::on_ProjectionPercpective3DButton_clicked()
+{
+    float x1=QInputDialog::getDouble(this,QString("enter x1"),
+                                QString(" X1"),0,-10000,10000,1);
+    float y1=QInputDialog::getDouble(this,QString("enter y1"),
+                                QString(" y1"),0,-10000,10000,1);
+    float z1=QInputDialog::getDouble(this,QString("enter Z1"),
+                                QString(" Z1"),0,-10000,10000,1);
+    int Axis=QInputDialog::getInt(this,QString("enter type"),
+                                QString("[1]->About X-axis     [2]->About Y-axis     [3]->About Z-axis"),1,1,3,1);
+
+    ProjectionPercpective3D(Axis,x1,y1,z1);
+    scene3D->clear();
+    DrawAxis3D();
+    DrawFig3D();
+
+
 }
