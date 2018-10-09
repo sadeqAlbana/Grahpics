@@ -8,7 +8,7 @@ CustomGraphicsScene::CustomGraphicsScene(QObject *parent) : QGraphicsScene(paren
 void CustomGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     //qDebug()<<mouseEvent->scenePos().rx();
-    emit geometryChanged(*&mouseEvent->scenePos());
+    emit geometryChanged(mouseEvent->scenePos());
 
     QGraphicsScene::mouseMoveEvent(mouseEvent);
 

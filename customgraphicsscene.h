@@ -10,7 +10,7 @@ public:
 protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
 signals:
-    void geometryChanged(QPointF &);
+    void geometryChanged(QPointF);
 };
 
 #endif // CUSTOMGRAPHICSSCENE_H
